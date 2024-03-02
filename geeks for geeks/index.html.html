@@ -1,0 +1,490 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+    <script>
+        function scrollr(){
+            var right = document.querySelector(".scroll-data");
+            right.scrollBy(350,0)   
+        }
+        function scrolll(){
+            var left = document.querySelector(".scroll-data");
+            left.scrollBy(-350,0)
+        }
+        document.addEventListener("DOMContentLoaded", function () {
+    var i = 1;
+    setInterval(function () {
+        switch (i) {
+            case 1:
+                document.getElementById("home_search").setAttribute('placeholder', 'Data Structures and Algorithm');
+                break;
+            case 2:
+                document.getElementById("home_search").setAttribute('placeholder', 'Complete Interview Preparations');
+                break;
+            case 3:
+                document.getElementById("home_search").setAttribute('placeholder', 'Must Do SDE Practice sheet');
+                break;
+            case 4:    
+                document.getElementById("home_search").setAttribute('placeholder', 'Learn Python,C++ and Java');
+                break;
+        }
+        i++;
+        if (i > 4) {
+            i = 1;
+        }
+    }, 2000);
+});
+
+let slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  let dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";  
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " active";
+}
+    </script>
+    <style>
+
+   
+.scroll-data {
+    position: relative;
+    overflow-x: hidden;
+    display: flex;
+    white-space: nowrap;
+    height: 80px;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    margin-bottom: 0px;
+    margin: 0px;
+}
+
+.icon {
+    color: rgb(red, green, blue);
+    font-size: 50px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 40px;
+    z-index: 1000;
+}
+
+.subheader-one {
+    border: 3px solid yellow;
+    background-color: yellow;
+    height: 40px;
+}
+.icon.right-arrow {
+    position: sticky;
+    right: 0;
+    top: 50%;
+}
+.icon.left-arrow {
+    position: sticky;
+    left: 0;
+    bottom: 50%;
+}  
+.courses { 
+    float:left;
+    margin-top: 11px;
+    z-index:0;
+    overflow:hidden;
+    position:relative; 
+    margin-left:38px;
+}  
+
+.courses:hover {
+    overflow:visible;
+    z-index:100;
+}
+
+.courses:hover .courses-hide { 
+    position: fixed;
+    z-index:99
+    /* position: static; */
+}
+
+.courses-hide { 
+    position: absolute;
+}
+
+.tutorials { 
+    float:left;
+    margin-top: 11px;
+    z-index:0;
+    overflow:hidden;
+    position:relative; 
+}  
+
+.tutorials:hover {
+    overflow:visible;
+    z-index:100;
+}
+
+.tutorials:hover .tutorials-hide { 
+    position: fixed;
+    z-index:99
+    /* position: static; */
+}
+
+.tutorials-hide { 
+    position: absolute;
+}
+
+.jobs { 
+    float:left;
+    margin-top: 11px;
+    z-index:0;
+    overflow:hidden;
+    position:relative; 
+}  
+
+.jobs:hover {
+    overflow:visible;
+    z-index:100;
+}
+
+.jobs:hover .jobs-hide { 
+    position: fixed;
+    z-index:99
+    /* position: static; */
+}
+
+.jobs-hide { 
+    position: absolute;
+}
+
+.practice { 
+    float:left;
+    margin-top: 11px;
+    z-index:0;
+    overflow:hidden;
+    position:relative; 
+}  
+
+.practice:hover {
+    overflow:visible;
+    z-index:100;
+}
+
+.practice:hover .practice-hide { 
+    position: fixed;
+    z-index:99
+    /* position: static; */
+}
+
+.practice-hide { 
+    position: absolute;
+}
+
+.contest { 
+    float:left;
+    margin-top: 11px;
+    z-index:0;
+    overflow:hidden;
+    position:relative; 
+}  
+
+.contest:hover {
+    overflow:visible;
+    z-index:100;
+}
+
+.contest:hover .contest-hide { 
+    position: fixed;
+    z-index:99
+    /* position: static; */
+}
+
+.contest-hide { 
+    position: absolute;
+}
+
+.box{
+    /* position: relative;
+    overflow: hidden; */
+    transition: 0.5s;
+}
+.box:hover{
+   z-index: 1;
+   transform: scale(1.25);
+   box-shadow: 0 25px 40px rgba(0,0,0,0.5);
+}
+
+* {box-sizing: border-box}
+body {font-family: Verdana, sans-serif; margin:0}
+.mySlides {display: none}
+img {vertical-align: middle;}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* Caption text */
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+  .prev, .next,.text {font-size: 11px}
+}
+
+
+
+    </style>
+</head>
+<body>
+   <header> 
+                   <div class="flex-container" style="display: inline;margin: 10px;">
+                   <div class="courses" style="margin-right: 10px;display: inline;"><b>Courses</b><div class="courses-hide" style="background-color:whitesmoke">GFG Classroom Program<br>DSA to Development<br>Coding for Everyone<br>For Working Professionals<br>For Students<br>Gate Exam Courses<br>For School Students<br> </div><span class="glyphicon glyphicon-chevron-down"></span></div>
+                   <div class="tutorials" style="margin-right: 10px;display: inline;"><b>Tutorials</b> <div class="tutorials-hide" style="background-color:whitesmoke">Data Structures & Algorithms<br>Pythonb<br>ML & Data Science<br>System Design<br>Languages<br>DevOps<br>Linux<br>School Learning<br>GATE<br> UPSC and SSC/Banking<br>GeeksforGeeks Videos</div><span class="glyphicon glyphicon-chevron-down"></span></div>
+                   <div class="jobs" style="margin-right: 10px;display: inline;"><b>Jobs</b><div class="jobs-hide" style="background-color:whitesmoke">Get Hired:Apply for Jobs<br>Corporate Hiring Solutions</div><span class="glyphicon glyphicon-chevron-down"></span></div>
+                   <div class="practice" style="margin-right: 10px;display: inline;"><b>Practice</b> <div class="practice-hide" style="background-color:whitesmoke">All DSA Problems<br>Problem of the Day<br>Company Wise coding Practice<br>GFG SDE Sheet<br>Practice Problems Difficulty Wise<br>Language Wise coding Practice<br>Curated DSA Lists</div><span class="glyphicon glyphicon-chevron-down"></span></div>
+                   <div class="contest" style="margin-right: 10px;display: inline;"><b>Contests</b><div class="contest-hide" style="background-color:whitesmoke">Job-A-thon Hiring Challenge<br>Get Internship<br>Hack-A-Thon<br>All Contests and Events</div><span class="glyphicon glyphicon-chevron-down"></span></b></div>
+                   <img style="margin-left: 280px;" src="./gfg-gg-logo.svg"/>
+                   <span style="margin-left: 300px;">
+                   <img style="width: 30px; margin-right: 10px" src="./search.jpg"/>
+                   <img style="width: 20px; margin-right: 10px" src="./moon_dark_mode_night_mode_icon_190939.png"/>
+                   <img style="width: 30px; margin-right: 10px" src="./translate-logo.webp"/> 
+                   <button style="border-radius: 5px;background-color: black;color: aliceblue;height: 40px;">Sign in</button>
+                   </span>
+<hr>
+            </div>
+        </header>
+    <subheader>
+                 <div class="scroll-data">
+                 <button class="icon left-arrow" onclick="scrolll()"><i class="fa fa-angle-double-left"></i></button>
+                 <p id="data" class="subheader-one" style="font-family: 'Times New Roman', Times, serif;display: inline;margin-right: 20px;">90% Refund @Courses</p>
+                 <p id="data" style="display: inline; font-family: 'Times New Roman', Times, serif;margin-right: 20px;">Trending Now</p>
+                 <p id="data" style="display: inline; font-family: 'Times New Roman', Times, serif;margin-right: 20px;">Data Structures & Algorithms</p>
+                 <p id="data" style="display: inline; font-family: 'Times New Roman', Times, serif;margin-right: 20px;">Foundational Courses</p>
+                 <p id="data" style="display: inline; font-family: 'Times New Roman', Times, serif;margin-right: 20px;">Data Science</p>
+                 <p id="data" style="display: inline; font-family: 'Times New Roman', Times, serif;margin-right: 20px;">Pratice Problem</p>
+                 <p id="data" style="display: inline; font-family: 'Times New Roman', Times, serif;margin-right: 20px;">Python</p>
+                 <p id="data" style="display: inline; font-family: 'Times New Roman', Times, serif;margin-right: 20px;">Machine learning</p>
+                 <p id="data" style="display: inline; font-family: 'Times New Roman', Times, serif;margin-right: 20px;">System Design</p>
+                 <p id="data" style="display: inline; font-family: 'Times New Roman', Times, serif;margin-right: 20px;">Django</p>
+                 <p id="data" style="display: inline; font-family: 'Times New Roman', Times, serif;margin-right: 20px;">DevOps Tutorial</p>
+                 <p id="data" style="display: inline; font-family: 'Times New Roman', Times, serif;margin-right: 20px;">Java</p>
+                 <p id="data" style="display: inline; font-family: 'Times New Roman', Times, serif;margin-right: 20px;">Javascript</p>
+                 <p id="data" style="display: inline; font-family: 'Times New Roman', Times, serif;margin-right: 20px;">C</p>
+                 <p id="data" style="display: inline; font-family: 'Times New Roman', Times, serif;margin-right: 20px;">C++</p>
+                 <p id="data" style="display: inline; font-family: 'Times New Roman', Times, serif;margin-right: 20px;">C++</p>
+                 <p id="data" style="display: inline; font-family: 'Times New Roman', Times, serif;margin-right: 20px;">ReactJS</p>
+                 <p id="data" style="display: inline; font-family: 'Times New Roman', Times, serif;margin-right: 20px;">NodeJS</p>
+                 <p id="data" style="display: inline; font-family: 'Times New Roman', Times, serif;margin-right: 20px;">Web Development</p>
+                 <p id="data" style="display: inline; font-family: 'Times New Roman', Times, serif;margin-right: 20px;">Web Design</p>
+                 <p id="data" style="display: inline; font-family: 'Times New Roman', Times, serif;margin-right: 20px;">Web browser</p>
+                 <p id="data" style="display: inline; font-family: 'Times New Roman', Times, serif;margin-right: 20px;">CP Live</p>
+                 <p id="data" style="display: inline; font-family: 'Times New Roman', Times, serif;margin-right: 20px;">Aptitude</p>
+                 <p id="data" style="display: inline; font-family: 'Times New Roman', Times, serif;margin-right: 20px;">Puzzles</p>
+                 <p id="data" style="display: inline; font-family: 'Times New Roman', Times, serif;margin-right: 20px;">Projects</p>
+                 <button class="icon right-arrow" onclick="scrollr()"><i class="fa fa-angle-double-right"></i></button>
+                 </div>
+    </subheader>
+<hr>
+        <content>
+            <p style="text-align: center;">Hello,What do youn want to Learn?</p>
+            <form style="display: flex;">
+            <input id="home_search" style="flex: 0.5;margin-left: 390px;" type="text" placeholder="Geeks for Geeks">
+            <button style="background-color: green;color: white;padding: 10px 50px;border:none;outline: none;letter-spacing: 1px;cursor: pointer;">Search</button>
+            </form>
+            <br>    
+            <p style="display: inline;margin-left: 380px;border: 1px solid blueviolet;">Full Stack Live Classes</p>
+            <p style="display: inline;border: 1px solid blueviolet;">Applied Data Science</p>
+            <p style="display: inline;border: 1px solid blueviolet;">DSA:Basic To Advamced Course</p>
+            <br>
+            <br>
+            <br>
+            <br>
+            <div>
+                <div style="border: 1px solid white; height: 300px; display: flex; width: 900px; margin-left: 180px; border-radius: 25px;">
+                    <nobr class="box" style="display: inline; border: 1px solid white; height: 80%; width: 215px; margin: 40px; margin-left: 50px; border-radius: 20px; text-align: center;">
+                        <div style="display: inline;"><img style="height: 35%;border-top-left-radius: 20px;border-top-right-radius: 20px;width: 215px;margin-bottom: px;margin-right: 100px;" src="./read.png"/>
+                            <div style="margin-top: 20px;"><b>How to create a Portfolio Gall... </b>
+                                <br><p style="font-size: small;margin-right: 13px;margin-top: 10px;">The portfolio gallery is useful when <br>your website contains different types...</p>
+                            </div>
+                        </div>
+                    </nobr>
+                    <nobr  class="box" style="display: inline; border: 1px solid white; height: 80%; width: 220px; margin: 40px; border-radius: 25px; text-align: center;">
+                        <div style="display: inline;"><img style="height: 35%;width: 217px;border-top-right-radius: 20px;border-top-left-radius: 20px" src="./practice.png"/>
+                            <div style="margin-top: 17px;margin-right: 23px;"><b style="margin-right: 10px;">Explore Practice Problems</b>
+                            <p style="font-size: small;margin-top: 10px;">Solve DSA Problems.Filter based on<br>topic tags and company tags.Get<br>curated problem lists by GFG ex...</p>
+                            </div>                         
+                        </div>  
+                    </nobr>
+                    <nobr  class="box" style="display: inline; border: 1px solid white; height: 80%; width: 210px; margin: 40px; border-radius: 25px; text-align: center;margin-right: 10px;">
+					 <div style="display: inline;"><img style="height: 35%;width: 205px;border-top-left-radius: 20px;border-top-right-radius: 20px" src="./learn.png"/>
+                        <div style="margin-right: 30px;margin-top: 20px;"><b style="margin-right: 67px;margin-top: 40px;">DSA Self Placed</b>
+                        <p style="font-size: small;margin-top: 10px;">Most popular course on DSA trusted<br>by over 75,000 students!Built with<br>years of experience by indus...</p>
+                        </div>
+                </div>
+                    </nobr>
+                </div> 
+                </div>
+                <br>
+                <slideshow>
+                    <div class="slideshow-container">
+
+                        <div class="mySlides fade">
+                          <div class="numbertext">1 / 3</div>
+                          <img src="./GFG-Weekly-Contest---SDE-Hiring.webp" style="width:100%">
+                          <div class="text">Caption Text</div>
+                        </div>
+                        
+                        <div class="mySlides fade">
+                          <div class="numbertext">2 / 3</div>
+                          <img src="./gfg-job-fair-final.webp" style="width:100%">
+                          <div class="text">Caption Two</div>
+                        </div>
+                        
+                        <div class="mySlides fade">
+                          <div class="numbertext">3 / 3</div>
+                          <img src="./How-Web-Design-Trends-Changed-over-the-years-copy.webp" style="width:100%">
+                          <div class="text">Caption Three</div>
+                        </div>
+  
+                        <div class="mySlides fade">
+                            <div class="numbertext">3 / 3</div>
+                            <img src="./how-Instagram-reel-uses-recommender-systems.webp" style="width:100%">
+                            <div class="text">Caption Three</div>
+                          </div>
+
+                        
+                        <a class="prev" onclick="plusSlides(-1)">❮</a>
+                        <a class="next" onclick="plusSlides(1)">❯</a>
+                        
+                        </div>
+                        <br>
+                        
+                        <div style="text-align:center">
+                          <span class="dot" onclick="currentSlide(1)"></span> 
+                          <span class="dot" onclick="currentSlide(2)"></span> 
+                          <span class="dot" onclick="currentSlide(3)"></span> 
+                          <span class="dot" onclick="currentSlide(3)"></span>
+                        </div>
+                 
+                </slideshow>
+                 
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        </content>
+</body>
+</html>
+
+
+
+
+
+
+    
+ 
+
+
+
+
+
+
