@@ -40,31 +40,104 @@
     }, 2000);
 });
 
-let slideIndex = 1;
-showSlides(slideIndex);
+document.addEventListener("DOMContentLoaded", function() {
+    const slidesContainer = document.querySelector('.slides');
+    const slides = document.querySelectorAll('.slide');
+    const dotContainer = document.querySelector('.dot-container');
 
-function plusSlides(n) {
-  showSlides(slideIndex += n);
+    // Create dots
+    slides.forEach((_, index) => {
+        const dot = document.createElement('span');
+        dot.classList.add('dot');
+        if (index === 0) {
+            dot.classList.add('active');
+        }
+        dotContainer.appendChild(dot);
+    });
+
+    const dots = document.querySelectorAll('.dot');
+
+    // Add click event listeners to dots
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            goToSlide(index);
+        });
+    });
+
+    let currentSlide = 0;
+
+    function goToSlide(slideIndex) {
+        slidesContainer.style.transform = `translateX(-${slideIndex * 820}px)`;
+        currentSlide = slideIndex;
+        updateDots();
+    }
+
+    function updateDots() {
+        dots.forEach((dot, index) => {
+            if (index === currentSlide) {
+                dot.classList.add('active');
+            } else {
+                dot.classList.remove('active');
+            }
+        });
+    }
+});
+
+const countdownTime = {
+    hours: 11,
+    minutes: 6,
+    seconds: 0
+};
+
+// Get the countdown element
+const countdownElement = document.getElementById('countdown');
+
+// Function to update the countdown
+function updateCountdown() {
+    // Calculate total seconds remaining
+    const totalSeconds = countdownTime.hours * 3600 + countdownTime.minutes * 60 + countdownTime.seconds;
+
+    // Update hours, minutes, and seconds
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    // Display the countdown
+    countdownElement.textContent = `Countdown: ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+    // If countdown is not yet finished, continue counting down
+    if (totalSeconds > 0) {
+        countdownTime.seconds--;
+        if (countdownTime.seconds < 0) {
+            countdownTime.seconds = 59;
+            countdownTime.minutes--;
+            if (countdownTime.minutes < 0) {
+                countdownTime.minutes = 59;
+                countdownTime.hours--;
+            }
+        }
+        setTimeout(updateCountdown, 1000); // Update every second
+    } else {
+        countdownElement.textContent = 'Countdown Finished';
+    }
 }
 
-function currentSlide(n) {
-  showSlides(slideIndex = n);
+// Start the countdown
+updateCountdown();
+
+function myFunction() {
+  var x = document.getElementById("viewmore");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  }
+
 }
 
-function showSlides(n) {
-  let i;
-  let slides = document.getElementsByClassName("mySlides");
-  let dots = document.getElementsByClassName("dot");
-  if (n > slides.length) {slideIndex = 1}    
-  if (n < 1) {slideIndex = slides.length}
-  for (i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";  
-  }
-  for (i = 0; i < dots.length; i++) {
-    dots[i].className = dots[i].className.replace(" active", "");
-  }
-  slides[slideIndex-1].style.display = "block";  
-  dots[slideIndex-1].className += " active";
+function myviewless(){
+    var x = document.getElementById("viewmore");
+    if(x.style.display ="block"){
+        x.style.display = "none"
+    }
 }
     </script>
     <style>
@@ -97,23 +170,27 @@ function showSlides(n) {
     background-color: yellow;
     height: 40px;
 }
+
 .icon.right-arrow {
     position: sticky;
     right: 0;
     top: 50%;
 }
+
 .icon.left-arrow {
     position: sticky;
     left: 0;
     bottom: 50%;
 }  
+
 .courses { 
     float:left;
     margin-top: 11px;
     z-index:0;
     overflow:hidden;
     position:relative; 
-    margin-left:38px;
+    margin-left:30px;
+
 }  
 
 .courses:hover {
@@ -129,6 +206,7 @@ function showSlides(n) {
 
 .courses-hide { 
     position: absolute;
+    margin: 30px;
 }
 
 .tutorials { 
@@ -230,127 +308,416 @@ function showSlides(n) {
 }
 .box:hover{
    z-index: 1;
-   transform: scale(1.25);
+   transform: scale(1);
    box-shadow: 0 25px 40px rgba(0,0,0,0.5);
 }
 
-* {box-sizing: border-box}
-body {font-family: Verdana, sans-serif; margin:0}
-.mySlides {display: none}
-img {vertical-align: middle;}
+.slides-container {
+        position: relative;
+        overflow: hidden;
+        width: 819px;
+    }
+    .slides {
+        display: flex;
+        transition: transform 0.5s ease;
+    }
+    .slide {
+        flex: 0 0 auto;
+        width: 820px; /* adjust as needed */
+        border: 1px solid white;
+        position: relative;
+        right: 1px;
+        height: 300px;
+        border-top-right-radius:5px;
+        border-bottom-right-radius: 5px;
+    }
+    .dot-container {
+        text-align: center;
+        margin-top: 15px;
+    }        
+    .dot {
+        display: inline-block;
+        height: 15px;
+        width: 15px;
+        background-color: #bbb;
+        border-radius: 50%;
+        margin: 0 5px;
+        cursor: pointer;
+    }
+    .dot.active {
+        background-color: #717171;
+    }
 
-/* Slideshow container */
-.slideshow-container {
-  max-width: 1000px;
-  position: relative;
-  margin: auto;
+    .grid-box{
+        display: grid;
+        grid-template-columns: repeat(3,220px);
+        grid-template-rows:repeat(2,300px);
+        margin-left: 300px;
+        grid-gap: 40px 5px ;
+       
+    }
+
+.grid-button:hover{
+background-color: green;
 }
 
-/* Next & previous buttons */
-.prev, .next {
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  width: auto;
-  padding: 16px;
-  margin-top: -22px;
-  color: white;
-  font-weight: bold;
-  font-size: 18px;
-  transition: 0.6s ease;
-  border-radius: 0 3px 3px 0;
-  user-select: none;
+/* .dsa-grid{
+    display: flex;
+    max-width: max-content;
+    /* margin-left: 300px; */
+    /* position: relative; */
+    /* overflow-x: hidden; */
+    /* white-space: nowrap; */
+    /* height: 80px; */
+    /* overflow-y: hidden; */
+    /* scroll-behavior: smooth; */
+    /* margin-bottom: 0px; */
+    /* margin: 0px; */
+   
+/* } */
+
+/* .dsa-items{
+    border: 1px solid white;
+    height: 120px;
+    width: 900px;
+    background-color: skyblue;
+    color: white;
+    border-top-left-radius:5px ;
+    border-top-right-radius:5px ;
+    border-bottom-left-radius:5px ;
+    border-bottom-right-radius:5px ;
 }
 
-/* Position the "next button" to the right */
-.next {
-  right: 0;
-  border-radius: 3px 0 0 3px;
+#dsa-items-two{
+             margin-left: 15px;
 }
 
-/* On hover, add a black background color with a little bit see-through */
-.prev:hover, .next:hover {
-  background-color: rgba(0,0,0,0.8);
+#dsa-items-third{
+             margin-left: 15px;
 }
 
-/* Caption text */
-.text {
-  color: #f2f2f2;
-  font-size: 15px;
-  padding: 8px 12px;
-  position: absolute;
-  bottom: 8px;
-  width: 100%;
-  text-align: center;
+#dsa-items-four{
+             margin-left: 15px;
 }
 
-/* Number text (1/3 etc) */
-.numbertext {
-  color: #f2f2f2;
-  font-size: 12px;
-  padding: 8px 12px;
-  position: absolute;
-  top: 0;
+#dsa-items-five{
+             margin-left: 15px;
 }
 
-/* The dots/bullets/indicators */
-.dot {
-  cursor: pointer;
-  height: 15px;
-  width: 15px;
-  margin: 0 2px;
-  background-color: #bbb;
-  border-radius: 50%;
-  display: inline-block;
-  transition: background-color 0.6s ease;
+#dsa-items-six{
+             margin-left: 15px;
 }
 
-.active, .dot:hover {
-  background-color: #717171;
+#dsa-items-seven{
+             margin-left: 15px;
 }
 
-/* Fading animation */
-.fade {
-  animation-name: fade;
-  animation-duration: 1.5s;
+#dsa-items-eight{
+             margin-left: 15px;
+} */
+
+/* .dsa-icon {
+    color: rgb(red, green, blue);
+    font-size: 50px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 40px;
+    z-index: 1000;
+}      
+
+.dsa-icon.right-arrow {
+    position: sticky;
+    right: 0;
+    top: 50%;
 }
 
-@keyframes fade {
-  from {opacity: .4} 
-  to {opacity: 1}
+.dsa-icon.left-arrow {
+    position: sticky;
+    left: 0;
+    bottom: 50%;
+}    */
+
+.job-grid-box{
+    display: grid;
+        grid-template-columns: repeat(3,220px);
+        grid-template-rows:repeat(2,300px);
+        margin-left: 300px;
+        grid-gap: 40px 5px;
+        
 }
 
-/* On smaller screens, decrease text size */
-@media only screen and (max-width: 300px) {
-  .prev, .next,.text {font-size: 11px}
+.job-grid-button:hover{
+background-color: green;
 }
 
+.job-grid-button:hover{
+color: white;
+}
 
+.job-items-one{
+    border: 1px solid white;
+    height: 320px;
+    width: 270x;
+    border-top-left-radius:5px ;
+    border-top-right-radius:5px ;
+    border-bottom-left-radius:5px ;
+    border-bottom-right-radius:5px ;
+}
+
+.job-items-one:hover{
+    z-index: 1;
+   transform: scale(1);
+   box-shadow: 0 25px 40px rgba(0,0,0,0.5);
+}
+
+.job-items-two{
+    border: 1px solid white;
+    height: 320px;
+    width: 270x;
+    border-top-left-radius:5px ;
+    border-top-right-radius:5px ;
+    border-bottom-left-radius:5px ;
+    border-bottom-right-radius:5px ;
+}
+
+.job-items-two:hover{
+    z-index: 1;
+   transform: scale(1);
+   box-shadow: 0 25px 40px rgba(0,0,0,0.5);
+}
+
+.job-items-third{
+    border: 1px solid white;
+    height: 320px;
+    width: 270x;
+    border-top-left-radius:5px ;
+    border-top-right-radius:5px ;
+    border-bottom-left-radius:5px ;
+    border-bottom-right-radius:5px ;
+}
+
+.job-items-third:hover{
+    z-index: 1;
+   transform: scale(1);
+   box-shadow: 0 25px 40px rgba(0,0,0,0.5);
+}
+
+.job-items-four{
+    border: 1px solid white;
+    height: 320px;
+    width: 270x;
+    border-top-left-radius:5px ;
+    border-top-right-radius:5px ;
+    border-bottom-left-radius:5px ;
+    border-bottom-right-radius:5px ;
+}
+
+.job-items-four:hover{
+    z-index: 1;
+   transform: scale(1);
+   box-shadow: 0 25px 40px rgba(0,0,0,0.5);
+}
+
+.job-items-five{
+    border: 1px solid white;
+    height: 320px;
+    width: 270x;
+    border-top-left-radius:5px ;
+    border-top-right-radius:5px ;
+    border-bottom-left-radius:5px ;
+    border-bottom-right-radius:5px ;
+}
+
+.job-items-five:hover{
+    z-index: 1;
+   transform: scale(1);
+   box-shadow: 0 25px 40px rgba(0,0,0,0.5);
+}
+
+.job-items-six{
+    border: 1px solid white;
+    height: 320px;
+    width: 270x;
+    border-top-left-radius:5px ;
+    border-top-right-radius:5px ;
+    border-bottom-left-radius:5px ;
+    border-bottom-right-radius:5px ;
+}
+
+.job-items-six:hover{
+    z-index: 1;
+   transform: scale(1);
+   box-shadow: 0 25px 40px rgba(0,0,0,0.5);
+}
+
+.video-grid{
+    display: grid;
+        grid-template-columns: repeat(3,230px);
+        grid-template-rows:repeat(2,300px);
+        margin-left: 300px;
+        grid-gap: 40px 5px;
+}
+
+.video-items-one{
+    /* background-color: #717171; */
+    border: 1px solid white;
+    height: 320px;
+    width: 270x;
+    border-top-left-radius:5px ;
+    border-top-right-radius:5px ;
+    border-bottom-left-radius:5px ;
+    border-bottom-right-radius:5px ;
+}
+
+.video-items-one:hover{
+    z-index: 1;
+   transform: scale(1);
+   box-shadow: 0 25px 40px rgba(0,0,0,0.5);
+}
+
+.video-items-two{
+    /* background-color:pink; */
+    border: 1px solid white;
+    height: 320px;
+    width: 270x;
+    border-top-left-radius:5px ;
+    border-top-right-radius:5px ;
+    border-bottom-left-radius:5px ;
+    border-bottom-right-radius:5px ;
+}
+
+.video-items-two:hover{
+    z-index: 1;
+   transform: scale(1);
+   box-shadow: 0 25px 40px rgba(0,0,0,0.5);
+}
+
+.video-items-third{
+    /* background-color: yellow; */
+    border: 1px solid white;
+    height: 320px;
+    width: 270x;
+    border-top-left-radius:5px ;
+    border-top-right-radius:5px ;
+    border-bottom-left-radius:5px ;
+    border-bottom-right-radius:5px ;
+}
+
+.video-items-third:hover{
+    z-index: 1;
+   transform: scale(1);
+   box-shadow: 0 25px 40px rgba(0,0,0,0.5);
+}
+
+.video-items-four{
+    /* background-color: green; */
+    border: 1px solid white;
+    height: 320px;
+    width: 270x;
+    border-top-left-radius:5px ;
+    border-top-right-radius:5px ;
+    border-bottom-left-radius:5px ;
+    border-bottom-right-radius:5px ;
+}
+
+.video-items-four:hover{
+    z-index: 1;
+   transform: scale(1);
+   box-shadow: 0 25px 40px rgba(0,0,0,0.5);
+}
+
+.video-items-five{
+    /* background-color: greenyellow; */
+    border: 1px solid white;
+    height: 320px;
+    width: 270x;
+    border-top-left-radius:5px ;
+    border-top-right-radius:5px ;
+    border-bottom-left-radius:5px ;
+    border-bottom-right-radius:5px ;
+}
+
+.video-items-five:hover{
+    z-index: 1;
+   transform: scale(1);
+   box-shadow: 0 25px 40px rgba(0,0,0,0.5);
+}
+
+.video-items-six{
+    /* background-color:aqua; */
+    border: 1px solid white;
+    height: 320px;
+    width: 350x;
+    border-top-left-radius:5px ;
+    border-top-right-radius:5px ;
+    border-bottom-left-radius:5px ;
+    border-bottom-right-radius:5px ;
+}
+
+.video-items-six:hover{
+    z-index: 1;
+   transform: scale(1);
+   box-shadow: 0 25px 40px rgba(0,0,0,0.5);
+}
+
+.article-box{
+    display: flex;
+    margin-left: 300px;
+}
+
+.five-box{
+    border: 1px solid white;
+    height: 150px;
+    width: 700px;
+    margin-left: 300px;
+    margin-top: 0px;
+}
+
+ .veiw{
+    border: 1px solid white;
+    height: 150px;
+    width: 700px;
+    margin-left: 300px;
+} 
+
+.view-more{
+    margin-top:40px
+}
+
+#course-grid:hover{
+    z-index: 1;
+   transform: scale(1);
+   box-shadow: 0 25px 40px rgba(0,0,0,0.5);
+    
+}
 
     </style>
 </head>
 <body>
+    <div style="background-image:linear-gradient(#467,white) ;">
    <header> 
-                   <div class="flex-container" style="display: inline;margin: 10px;">
-                   <div class="courses" style="margin-right: 10px;display: inline;"><b>Courses</b><div class="courses-hide" style="background-color:whitesmoke">GFG Classroom Program<br>DSA to Development<br>Coding for Everyone<br>For Working Professionals<br>For Students<br>Gate Exam Courses<br>For School Students<br> </div><span class="glyphicon glyphicon-chevron-down"></span></div>
-                   <div class="tutorials" style="margin-right: 10px;display: inline;"><b>Tutorials</b> <div class="tutorials-hide" style="background-color:whitesmoke">Data Structures & Algorithms<br>Pythonb<br>ML & Data Science<br>System Design<br>Languages<br>DevOps<br>Linux<br>School Learning<br>GATE<br> UPSC and SSC/Banking<br>GeeksforGeeks Videos</div><span class="glyphicon glyphicon-chevron-down"></span></div>
-                   <div class="jobs" style="margin-right: 10px;display: inline;"><b>Jobs</b><div class="jobs-hide" style="background-color:whitesmoke">Get Hired:Apply for Jobs<br>Corporate Hiring Solutions</div><span class="glyphicon glyphicon-chevron-down"></span></div>
-                   <div class="practice" style="margin-right: 10px;display: inline;"><b>Practice</b> <div class="practice-hide" style="background-color:whitesmoke">All DSA Problems<br>Problem of the Day<br>Company Wise coding Practice<br>GFG SDE Sheet<br>Practice Problems Difficulty Wise<br>Language Wise coding Practice<br>Curated DSA Lists</div><span class="glyphicon glyphicon-chevron-down"></span></div>
-                   <div class="contest" style="margin-right: 10px;display: inline;"><b>Contests</b><div class="contest-hide" style="background-color:whitesmoke">Job-A-thon Hiring Challenge<br>Get Internship<br>Hack-A-Thon<br>All Contests and Events</div><span class="glyphicon glyphicon-chevron-down"></span></b></div>
+                   <div class="flex-container" style="display: inline;margin: 15px;position: relative;right: 15px;">
+                   <div class="courses" style="margin-right: 15px;display: inline;"><b>Courses</b><div class="courses-hide" style="background-color:whitesmoke">GFG Classroom Program<br>DSA to Development<br>Coding for Everyone<br>For Working Professionals<br>For Students<br>Gate Exam Courses<br>For School Students<br> </div><span class="glyphicon glyphicon-chevron-down"></span></div>
+                   <div class="tutorials" style="margin-right: 15px;display: inline;"><b>Tutorials</b> <div class="tutorials-hide" style="background-color:whitesmoke">Data Structures & Algorithms<br>Pythonb<br>ML & Data Science<br>System Design<br>Languages<br>DevOps<br>Linux<br>School Learning<br>GATE<br> UPSC and SSC/Banking<br>GeeksforGeeks Videos</div><span class="glyphicon glyphicon-chevron-down"></span></div>
+                   <div class="jobs" style="margin-right: 15px;display: inline;"><b>Jobs</b><div class="jobs-hide" style="background-color:whitesmoke">Get Hired:Apply for Jobs<br>Corporate Hiring Solutions</div><span class="glyphicon glyphicon-chevron-down"></span></div>
+                   <div class="practice" style="margin-right: 15px;display: inline;"><b>Practice</b> <div class="practice-hide" style="background-color:whitesmoke">All DSA Problems<br>Problem of the Day<br>Company Wise coding Practice<br>GFG SDE Sheet<br>Practice Problems Difficulty Wise<br>Language Wise coding Practice<br>Curated DSA Lists</div><span class="glyphicon glyphicon-chevron-down"></span></div>
+                   <div class="contest" style="margin-right: 15px;display: inline;"><b>Contests</b><div class="contest-hide" style="background-color:whitesmoke">Job-A-thon Hiring Challenge<br>Get Internship<br>Hack-A-Thon<br>All Contests and Events</div><span class="glyphicon glyphicon-chevron-down"></span></b></div>
                    <img style="margin-left: 280px;" src="./gfg-gg-logo.svg"/>
-                   <span style="margin-left: 300px;">
-                   <img style="width: 30px; margin-right: 10px" src="./search.jpg"/>
-                   <img style="width: 20px; margin-right: 10px" src="./moon_dark_mode_night_mode_icon_190939.png"/>
-                   <img style="width: 30px; margin-right: 10px" src="./translate-logo.webp"/> 
-                   <button style="border-radius: 5px;background-color: black;color: aliceblue;height: 40px;">Sign in</button>
+                   <span style="margin-left: 250px;">
+                   <img style="width: 30px; margin-right: 15px" src="./search.jpg"/>
+                   <img style="width: 5px; margin-right: 15px;z-index: 100" src="./moon_dark_mode_night_mode_icon_190939.png"/>
+                   <img style="width: 30px; margin-right: 15px;" src="./translate-logo.webp"/> 
+                   <button style="border-radius: 5px;background-color: black;color:white ;height: 40px;">Sign in</button>
                    </span>
-<hr>
             </div>
         </header>
+        <br>
+        <br>
     <subheader>
                  <div class="scroll-data">
                  <button class="icon left-arrow" onclick="scrolll()"><i class="fa fa-angle-double-left"></i></button>
-                 <p id="data" class="subheader-one" style="font-family: 'Times New Roman', Times, serif;display: inline;margin-right: 20px;">90% Refund @Courses</p>
+                 <p id="data" class="subheader-one" style="font-family: 'Times New Roman', Times, serif;display: inline;margin-right: 5px;">90% Refund @Courses</p>
                  <p id="data" style="display: inline; font-family: 'Times New Roman', Times, serif;margin-right: 20px;">Trending Now</p>
                  <p id="data" style="display: inline; font-family: 'Times New Roman', Times, serif;margin-right: 20px;">Data Structures & Algorithms</p>
                  <p id="data" style="display: inline; font-family: 'Times New Roman', Times, serif;margin-right: 20px;">Foundational Courses</p>
@@ -378,12 +745,11 @@ img {vertical-align: middle;}
                  <button class="icon right-arrow" onclick="scrollr()"><i class="fa fa-angle-double-right"></i></button>
                  </div>
     </subheader>
-<hr>
         <content>
             <p style="text-align: center;">Hello,What do youn want to Learn?</p>
             <form style="display: flex;">
             <input id="home_search" style="flex: 0.5;margin-left: 390px;" type="text" placeholder="Geeks for Geeks">
-            <button style="background-color: green;color: white;padding: 10px 50px;border:none;outline: none;letter-spacing: 1px;cursor: pointer;">Search</button>
+            <button style="background-color: green;color: white;padding: 15px 50px;border:none;outline: none;letter-spacing: 1px;cursor: pointer;">Search</button>
             </form>
             <br>    
             <p style="display: inline;margin-left: 380px;border: 1px solid blueviolet;">Full Stack Live Classes</p>
@@ -393,85 +759,506 @@ img {vertical-align: middle;}
             <br>
             <br>
             <br>
+      
             <div>
                 <div style="border: 1px solid white; height: 300px; display: flex; width: 900px; margin-left: 180px; border-radius: 25px;">
-                    <nobr class="box" style="display: inline; border: 1px solid white; height: 80%; width: 215px; margin: 40px; margin-left: 50px; border-radius: 20px; text-align: center;">
-                        <div style="display: inline;"><img style="height: 35%;border-top-left-radius: 20px;border-top-right-radius: 20px;width: 215px;margin-bottom: px;margin-right: 100px;" src="./read.png"/>
-                            <div style="margin-top: 20px;"><b>How to create a Portfolio Gall... </b>
-                                <br><p style="font-size: small;margin-right: 13px;margin-top: 10px;">The portfolio gallery is useful when <br>your website contains different types...</p>
+                    <nobr class="box" style="display: inline; border: 1px solid white; height: 80%; width: 215px; margin: 40px; margin-left: 50px; border-radius: 5px; text-align: center;">
+                        <div style="display: inline;"><a style="text-decoration: none;" href="https://www.geeksforgeeks.org/learn-data-structures-and-algorithms-dsa-tutorial/"><img style="height: 35%;border-top-left-radius: 5px;border-top-right-radius: 5px;width: 215px;margin-bottom: px;margin-right: 100px;border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;" src="./read.png"/></a>
+                            <div style="margin-top: 5px;"><a style="text-decoration: none;" href="https://www.geeksforgeeks.org/learn-data-structures-and-algorithms-dsa-tutorial/"><b style="color: black;">How to create a Portfolio Gall... </b></a>
+                                <br><p style="font-size: small;margin-right: 13px;margin-top: 15px;"><a style="color: black;text-decoration: none;" href="https://www.geeksforgeeks.org/learn-data-structures-and-algorithms-dsa-tutorial/">The portfolio gallery is useful when <br>your website contains different types...</p></a>
                             </div>
                         </div>
                     </nobr>
                     <nobr  class="box" style="display: inline; border: 1px solid white; height: 80%; width: 220px; margin: 40px; border-radius: 25px; text-align: center;">
-                        <div style="display: inline;"><img style="height: 35%;width: 217px;border-top-right-radius: 20px;border-top-left-radius: 20px" src="./practice.png"/>
-                            <div style="margin-top: 17px;margin-right: 23px;"><b style="margin-right: 10px;">Explore Practice Problems</b>
-                            <p style="font-size: small;margin-top: 10px;">Solve DSA Problems.Filter based on<br>topic tags and company tags.Get<br>curated problem lists by GFG ex...</p>
+                        <div style="display: inline;"><a style="text-decoration: none;" href="https://www.geeksforgeeks.org/explore?page=1&curated%5B%5D=1&sortBy=submissions&curated_names%5B%5D=SDE%2520Sheet%2F%3Futm_source%3Dgeeksforgeeks&utm_medium=newui_home&utm_campaign=first_section"><img style="height: 35%;width: 217px;border-top-right-radius: 5px;border-top-left-radius: 5px" src="./practice.png"/></a>
+                            <div style="margin-top: 17px;margin-right: 23px;"><a style="text-decoration: none;" href="https://www.geeksforgeeks.org/explore?page=1&curated%5B%5D=1&sortBy=submissions&curated_names%5B%5D=SDE%2520Sheet%2F%3Futm_source%3Dgeeksforgeeks&utm_medium=newui_home&utm_campaign=first_section"><b style="margin-right: 15px;color: black;">Explore Practice Problems</b></a>
+                            <p style="font-size: small;margin-top: 15px;"><a style="text-decoration: none;color: black;" href="https://www.geeksforgeeks.org/explore?page=1&curated%5B%5D=1&sortBy=submissions&curated_names%5B%5D=SDE%2520Sheet%2F%3Futm_source%3Dgeeksforgeeks&utm_medium=newui_home&utm_campaign=first_section">Solve DSA Problems.Filter based on<br>topic tags and company tags.Get<br>curated problem lists by GFG ex...</a></p>
                             </div>                         
                         </div>  
                     </nobr>
-                    <nobr  class="box" style="display: inline; border: 1px solid white; height: 80%; width: 210px; margin: 40px; border-radius: 25px; text-align: center;margin-right: 10px;">
-					 <div style="display: inline;"><img style="height: 35%;width: 205px;border-top-left-radius: 20px;border-top-right-radius: 20px" src="./learn.png"/>
-                        <div style="margin-right: 30px;margin-top: 20px;"><b style="margin-right: 67px;margin-top: 40px;">DSA Self Placed</b>
-                        <p style="font-size: small;margin-top: 10px;">Most popular course on DSA trusted<br>by over 75,000 students!Built with<br>years of experience by indus...</p>
+                    <nobr  class="box" style="display: inline; border: 1px solid white; height: 80%; width: 210px; margin: 40px; border-radius: 25px; text-align: center;margin-right: 15px;">
+					 <div style="display: inline;"><a style="text-decoration: none;color: black;" href="https://www.geeksforgeeks.org/courses/complete-interview-preparation?utm_source=geeksforgeeks&utm_medium=newui_home&utm_campaign=first_section"><img style="height: 35%;width: 205px;border-top-left-radius: 5px;border-top-right-radius: 5px" src="./learn.png"/></a>
+                        <div style="margin-right: 30px;margin-top: 5px;"><a style="text-decoration: none;color: black;" href="https://www.geeksforgeeks.org/courses/complete-interview-preparation?utm_source=geeksforgeeks&utm_medium=newui_home&utm_campaign=first_section"><b style="margin-right: 67px;margin-top: 40px;">DSA Self Placed</b></a>
+                        <p style="font-size: small;margin-top: 15px;"><a style="text-decoration: none;color: black;" href="https://www.geeksforgeeks.org/courses/complete-interview-preparation?utm_source=geeksforgeeks&utm_medium=newui_home&utm_campaign=first_section">Most popular course on DSA trusted<br>by over 75,000 students!Built with<br>years of experience by indus...</a></p>
                         </div>
                 </div>
+            </div>
                     </nobr>
                 </div> 
                 </div>
                 <br>
-                <slideshow>
-                    <div class="slideshow-container">
-
-                        <div class="mySlides fade">
-                          <div class="numbertext">1 / 3</div>
-                          <img src="./GFG-Weekly-Contest---SDE-Hiring.webp" style="width:100%">
-                          <div class="text">Caption Text</div>
+                <slideshow style="position: relative;left:300px ;">
+                    <div class="slides-container">
+                        <div class="slides" style="width: 3280px;">
+                            <div class="slide" style="display: inline;">
+                                <a href="./https://www.geeksforgeeks.org/unlock-the-biggest-opportunity-with-gfg-sde-internship/?ref=home-gblog"><img id="sde-intern" style="height: 298px;width: 450px;border-top-left-radius: 5px;border-bottom-left-radius: 5px;" src="./GFG-Weekly-Contest---SDE-Hiring.webp"></a>
+                                <div style="display: inline;margin-top: 40px;margin-left: 5px;position: relative;left: 480px;bottom: 270px;"><p > <a style="text-decoration: none;" href="./https://www.geeksforgeeks.org/unlock-the-biggest-opportunity-with-gfg-sde-internship/?ref=home-gblog"><b style="color: green;text-decoration: none;">GBlog</b></p><b style="color: black;">Unlock the Biggest Opportunity<br>with GeeksforGeeks-SDE<br>Internship(70000 INR Per Month)</b></a>
+                                    <p style="margin-top: 15px;"><a style="text-decoration: none;color: black;" href="./https://www.geeksforgeeks.org/unlock-the-biggest-opportunity-with-gfg-sde-internship/?ref=home-gblog">Do you dream of turning your coding skills<br>into a real-world impact?Are you constantly<br>pushing yourself to the top of the<br>leaderboard on GFG Weekly?If so,we have</p></a>
+                                    </div>
+                            </div>
+                                 <div class="slide" style="display: inline;">
+                                <a href="https://www.geeksforgeeks.org/how-web-design-trends-changed-over-the-years/?ref=home-gblog"><img id="sde-intern" style="height: 295px;width: 450px;border-top-left-radius: 5px;border-bottom-left-radius: 5px;" src="./gfg-job-fair-final.webp"></a>
+                                <div style="display: inline;margin-top: 40px;margin-left: 5px;position: relative;bottom: 80px;"> <a style="text-decoration: none;" href="https://www.geeksforgeeks.org/how-web-design-trends-changed-over-the-years/?ref=home-gblog"><b style="width: 200px;color: black;">How Web Design Trends Changed over the Years?</b></a>
+                                    <p style="margin-top: 15px;position: relative;left: 470px;bottom: 140px;"><a style="text-decoration: none;color: black;" href="https://www.geeksforgeeks.org/how-web-design-trends-changed-over-the-years/?ref=home-gblog">It is well evident looking at the history of<br>web design that every half of the decade.<br>there is a major design trend thta takes the<br>design industry by storm.Web design hav...</a></p>
+                                    </div>
+                            </div>
+                            <div class="slide" style="display: inline;">
+                                <a href="https://www.geeksforgeeks.org/how-web-design-trends-changed-over-the-years/?ref=home-gblog"><img id="sde-intern" style="height: 298px;width: 450px;border-top-left-radius: 5px;border-bottom-left-radius: 5px;" src="./How-Web-Design-Trends-Changed-over-the-years-copy.webp"></a>
+                                <div style="display: inline;margin-top: 40px;margin-left: 5px;position: relative;bottom: 80px;"> <a style="text-decoration: none;" href="https://www.geeksforgeeks.org/how-web-design-trends-changed-over-the-years/?ref=home-gblog"><b style="color: black;">GeeksforGeeks Job Fair</b></a>
+                                    <p style="margin-top: 15px;position: relative;left: 470px;bottom: 140px;"> <a style="text-decoration: none;color: black;" href="https://www.geeksforgeeks.org/how-web-design-trends-changed-over-the-years/?ref=home-gblog">The last year was filled with the grim news<br>of layoffs in tech companies,including the<br>gaints,with over 30,611 people fired from<br>30 companies.This happened throughout t...</a></p>
+                                    </div>
+                            </div>
+                            <div class="slide" style="display: inline;">
+                                <a href="https://www.geeksforgeeks.org/how-instagram-reel-uses-recommender-systems/?ref=home-gblog"><img id="sde-intern" style="height: 298px;width: 450px;border-top-left-radius: 5px;border-bottom-left-radius: 5px;" src="./how-Instagram-reel-uses-recommender-systems.webp"></a>
+                                <div style="display: inline;margin-top: 40px;margin-left: 5px;position: relative;bottom: 70px;"><a style="text-decoration: none;" href="https://www.geeksforgeeks.org/how-instagram-reel-uses-recommender-systems/?ref=home-gblog"><b style="color: black;">How Instagram Reel Uses Recommender Systems? </b></a>
+                                    <p style="margin-top: 15px;position: relative;left: 470px;bottom: 140px;"><a style="text-decoration: none;color: black;" href="https://www.geeksforgeeks.org/how-instagram-reel-uses-recommender-systems/?ref=home-gblog">Social media has become a major platform<br>for communication and entertainment<br>bringing a need to constantly seek<br>innovative ways to keep users engaged and<br>entertained.Inst...</a></p>
+                                    </div>
+                            </div>
+                           
                         </div>
-                        
-                        <div class="mySlides fade">
-                          <div class="numbertext">2 / 3</div>
-                          <img src="./gfg-job-fair-final.webp" style="width:100%">
-                          <div class="text">Caption Two</div>
+                        <div class="dot-container"></div>
+                    </div>
+                 </slideshow>
+                </content>
+                <course>
+                            <h3><b style="margin-left: 300px;">Courses</b></h3>
+                            <div class="grid-box">
+                                    <div class="itmes1" id="course-grid"><a href="https://www.geeksforgeeks.org/courses/dsa-to-development-coding-guide?utm_source=geeksforgeeks&utm_medium=newui_home&utm_campaign=courses"><img style="width: 220px;height: 150px;" src="./DSA-to-Dev_1705410853.webp"/><p style="border: 1px solid white;width: 33px;border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;position: relative;left: 186px;bottom: 150px;color: white;"><img src="./5star.svg"/>5</p></a>
+                                    <p style="position: relative;bottom: 15px;"><a style="text-decoration: none;" href="https://www.geeksforgeeks.org/courses/dsa-to-development-coding-guide?utm_source=geeksforgeeks&utm_medium=newui_home&utm_campaign=courses"><b style="font-size: small;color: black;">DSA to Development: A Complete Guide</b></a></p>
+                                    <p style="font-size: smaller;position:relative;bottom: 20px;"><a style="text-decoration: none;color: black;" href="https://www.geeksforgeeks.org/courses/dsa-to-development-coding-guide?utm_source=geeksforgeeks&utm_medium=newui_home&utm_campaign=courses"><img src="./Levels-1669283463.svg"/>Beginner To Advance</a></p>
+                                    <p style="font-size: smaller;position:relative;bottom: 25px;"><a style="text-decoration: none;color: black;" href="https://www.geeksforgeeks.org/courses/dsa-to-development-coding-guide?utm_source=geeksforgeeks&utm_medium=newui_home&utm_campaign=courses"><img src="./Group7622-1669294650.svg"/>193k+ interested Geeks</a></p>
+                                    <a style="text-decoration: none;color: black;" href="https://www.geeksforgeeks.org/courses/dsa-to-development-coding-guide?utm_source=geeksforgeeks&utm_medium=newui_home&utm_campaign=courses"><button style="margin-left: 60px;position: relative;bottom: 35px;" class="grid-button">Explore Now</button></a>
+                                    </div>
+                                    <div class="itmes2" id="course-grid"><a href="https://www.geeksforgeeks.org/courses/full-stack-node?utm_source=geeksforgeeks&utm_medium=newui_home&utm_campaign=courses"><img style="width: 220px;height: 150px;" src="./FSRNL_1705410152.webp"/><p style="border: 1px solid white;width: 42px;border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;position: relative;left: 180px;bottom: 150px;color: white;"><img src="./5star.svg"/>4.7</p></a>
+                                        <p  style="position: relative;bottom: 15px;"><a style="text-decoration: none;" href="https://www.geeksforgeeks.org/courses/full-stack-node?utm_source=geeksforgeeks&utm_medium=newui_home&utm_campaign=courses"><b style="font-size: small;color: black;">Full Stack Development with React & Node Js-Live</b></a></p>
+                                        <p  style="font-size: smaller;position:relative;bottom: 20px;"><a style="text-decoration: none;color: black;" href="https://www.geeksforgeeks.org/courses/full-stack-node?utm_source=geeksforgeeks&utm_medium=newui_home&utm_campaign=courses"><img src="./Levels-1669283463.svg"/>Beginner To Advance</a></p>
+                                        <p  style="font-size: smaller;position:relative;bottom: 25px;"><a style="text-decoration: none;color: black;" href="https://www.geeksforgeeks.org/courses/full-stack-node?utm_source=geeksforgeeks&utm_medium=newui_home&utm_campaign=courses"><img src="./Group7622-1669294650.svg"/>217k+ interested Geeks</a></p>
+                                        <a  href="https://www.geeksforgeeks.org/courses/full-stack-node?utm_source=geeksforgeeks&utm_medium=newui_home&utm_campaign=courses"><button style="margin-left: 60px;position: relative;bottom: 35px;" class="grid-button">Explore Now</button></a>
+                                    </div>
+                                    <div class="itmes3" id="course-grid"><img style="width: 220px;height: 150px;" src="./interview-101_1705399030.webp"/><p style="border: 1px solid white;width: 42px;border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;position: relative;left: 180px;bottom: 150px;color: white;"><img src="./5star.svg"/>4.9</p>
+                                    <p  style="position: relative;bottom: 15px;"><b style="font-size: small;">Tech Interview 101-From DSA to System Design for Work...</b></p>
+                                    <p  style="font-size: smaller;position:relative;bottom: 20px;"><img src="./Levels-1669283463.svg"/>Beginner To Advance</p>
+                                    <p style="font-size: smaller;position:relative;bottom: 25px;"><img src="./Group7622-1669294650.svg"/>270k+ interested Geeks</p>
+                                    <button style="margin-left: 60px;position: relative;bottom: 35px;" class="grid-button">Explore Now</button>
+                                </div>
+                                    <div class="itmes4" id="course-grid"><img style="width: 220px;height: 150px;" src="./Software-Testing_1705407884.webp"/><p style="border: 1px solid white;width: 42px;border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;position: relative;left: 180px;bottom: 150px;color: white;"><img src="./5star.svg"/>4.6</p>
+                                    <p  style="position: relative;bottom: 15px;"><b style="font-size: small;">Complete Guide to software Testing and Automation:Mast</b></p>
+                                    <p  style="font-size: smaller;position:relative;bottom: 20px;"><img src="./Levels-1669283463.svg"/>Beginner To Advance</p>
+                                    <p style="font-size: smaller;position:relative;bottom: 25px;"><img src="./Group7622-1669294650.svg"/>19k+ interested Geeks</p>
+                                    <button style="margin-left: 60px;position: relative;bottom: 35px;" class="grid-button">Explore Now</button>
+                                    </div>
+                                    <div class="itmes5" id="course-grid"><img style="width: 220px;height: 150px;" src="./dsa-web_1705410455.webp"/><p style="border: 1px solid white;width: 42px;border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;position: relative;left: 180px;bottom: 150px;color: white;"><img src="./5star.svg"/>4.7</p>
+                                    <p  style="position: relative;bottom: 15px;"><b style="font-size: small;">Data Structures & Algorithms in Python-Self Placed</b></p>
+                                    <p  style="font-size: smaller;position:relative;bottom: 20px;"><img src="./Levels-1669283463.svg"/>Beginner To Advance</p>
+                                    <p style="font-size: smaller;position:relative;bottom: 25px;"><img src="./Group7622-1669294650.svg"/>236k+ interested Geeks</p>
+                                    <button style="margin-left: 60px;position: relative;bottom: 35px;" class="grid-button">Explore Now</button>
+                                    </div>
+                                    <div class="itmes6" id="course-grid"><img style="width: 220px;height: 150px;" src="./DSA_1705410714.webp"/><p style="border: 1px solid white;width: 42px;border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;position: relative;left: 180px;bottom: 150px;color: white;"><img src="./5star.svg"/>4.6</p>
+                                    <p  style="position: relative;bottom: 15px;"><b style="font-size: small;">Data Structures and Algorithms- Self Placed</b></p>
+                                    <p  style="font-size: smaller;position:relative;bottom: 20px;"><img src="./Levels-1669283463.svg"/>Beginner To Advance</p>
+                                    <p style="font-size: smaller;position:relative;bottom: 25px;"><img src="./Group7622-1669294650.svg"/>1148k+ interested Geeks</p>
+                                    <button style="margin-left: 60px;position: relative;bottom: 35px;" class="grid-button">Explore Now</button>
+                                    </div>
+                            </div>              
+                </course>
+                <br>
+                <br>
+                <br>
+                <br>
+                <job>
+                    <h3><b style="margin-left: 300px;">Job Fair Exclusive</b></h3>
+                         <div class="job-grid-box">
+                         <div class="job-items-one"><img style="height: 30px;width: 50px;" src="./gainwell_technologies_logo_1709369520.jpeg"/><img style="height: 50px;width: 70px;margin-left: 80px;margin-top: 15px;" src="./Screenshot 2024-03-04 at 04-07-14 GFG Get Hired gainwell technologies.png"/><br><br>Support Engineer
+                         <br>
+                         <br>
+                         <p style="color: green;">gainwell technologies</p>
+                         <p><img style="height: 5px;width: 5px;" src="./images (1).png"/>&nbsp&nbsp As per Industry standard</p>
+                         <p><img style="height: 5px;width: 5px;" src="./535239.png"/>&nbsp&nbsp Onsite</p>
+                         <p><img style="height: 5px;width: 5px;" src="./images.jpeg"/>&nbsp&nbsp 6+years</p>
+                         <br>
+                         <br>
+                         <p style="font-size: xx-small;">Apply before Thu Apr 04 2024<span style="color: green;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<button class="job-grid-button">Apply Now</button></span></p>
+                         </div>
+                         <div class="job-items-two"><img style="height: 30px;width: 50px;" src="./gainwell_technologies_logo_1709369520.jpeg"/><img style="height: 50px;width: 70px;margin-left: 80px;margin-top: 15px;" src="./Screenshot 2024-03-04 at 04-07-14 GFG Get Hired gainwell technologies.png"/><br><br>Data Quality Engineer
+                         <br>
+                         <br>
+                         <p style="color: green;">gainwell technologies</p>
+                         <p><img style="height: 5px;width: 5px;" src="./images (1).png"/>&nbsp&nbsp As per Industry standard</p>
+                         <p><img style="height: 5px;width: 5px;" src="./535239.png"/>&nbsp&nbsp Onsite</p>
+                         <p><img style="height: 5px;width: 5px;" src="./images.jpeg"/>&nbsp&nbsp 6+years</p>
+                         <br>
+                         <br>
+                         <p style="font-size: xx-small;">Apply before Thu Apr 04 2024<span style="color: green;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<button class="job-grid-button">Apply Now</button></span></p>
                         </div>
-                        
-                        <div class="mySlides fade">
-                          <div class="numbertext">3 / 3</div>
-                          <img src="./How-Web-Design-Trends-Changed-over-the-years-copy.webp" style="width:100%">
-                          <div class="text">Caption Three</div>
+                         <div class="job-items-third"><img style="height: 30px;width: 50px;" src="./gainwell_technologies_logo_1709369520.jpeg"/><img style="height: 50px;width: 70px;margin-left: 80px;margin-top: 15px;" src="./Screenshot 2024-03-04 at 04-07-14 GFG Get Hired gainwell technologies.png"/><br><br>Tableau Developer
+                            <br>
+                            <br>
+                            <p style="color: green;">gainwell technologies</p>
+                            <p><img style="height: 5px;width: 5px;" src="./images (1).png"/>&nbsp&nbsp As per Industry standard</p>
+                            <p><img style="height: 5px;width: 5px;" src="./535239.png"/>&nbsp&nbsp Onsite</p>
+                            <p><img style="height: 5px;width: 5px;" src="./images.jpeg"/>&nbsp&nbsp 5+years</p>
+                            <br>
+                            <br>
+                            <p style="font-size: xx-small;">Apply before Thu Apr 04 2024<span style="color: green;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<button class="job-grid-button">Apply Now</button></span></p>
                         </div>
-  
-                        <div class="mySlides fade">
-                            <div class="numbertext">3 / 3</div>
-                            <img src="./how-Instagram-reel-uses-recommender-systems.webp" style="width:100%">
-                            <div class="text">Caption Three</div>
+                         <div class="job-items-four"><img style="height: 30px;width: 50px;" src="./gainwell_technologies_logo_1709369520.jpeg"/><img style="height: 50px;width: 70px;margin-left: 80px;margin-top: 15px;" src="./Screenshot 2024-03-04 at 04-07-14 GFG Get Hired gainwell technologies.png"/><br><br>SSRS Developer
+                            <br>
+                            <br>
+                            <p style="color: green;">gainwell technologies</p>
+                            <p><img style="height: 5px;width: 5px;" src="./images (1).png"/>&nbsp&nbsp As per Industry standard</p>
+                            <p><img style="height: 5px;width: 5px;" src="./535239.png"/>&nbsp&nbsp Onsite</p>
+                            <p><img style="height: 5px;width: 5px;" src="./images.jpeg"/>&nbsp&nbsp 5+years</p>
+                            <br>
+                            <br>
+                            <p style="font-size: xx-small;">Apply before Thu Apr 04 2024<span style="color: green;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<button class="job-grid-button">Apply Now</button></span></p>
+                        </div>
+                         <div class="job-items-five"><img style="height: 30px;width: 50px;" src="./gainwell_technologies_logo_1709369520.jpeg"/><img style="height: 50px;width: 70px;margin-left: 80px;margin-top: 15px;" src="./Screenshot 2024-03-04 at 04-07-14 GFG Get Hired gainwell technologies.png"/><br><br>Data Engineer
+                            <br>
+                            <br>
+                            <p style="color: green;">gainwell technologies</p>
+                            <p><img style="height: 5px;width: 5px;" src="./images (1).png"/>&nbsp&nbsp As per Industry standard</p>
+                            <p><img style="height: 5px;width: 5px;" src="./535239.png"/>&nbsp&nbsp Onsite</p>
+                            <p><img style="height: 5px;width: 5px;" src="./images.jpeg"/>&nbsp&nbsp 5+years</p>
+                            <br>
+                            <br>
+                            <p style="font-size: xx-small;">Apply before Thu Apr 04 2024<span style="color: green;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<button class="job-grid-button">Apply Now</button></span></p>
+                        </div>
+                         <div class="job-items-six"><img style="height: 30px;width: 50px;" src="./gainwell_technologies_logo_1709369520.jpeg"/><img style="height: 50px;width: 70px;margin-left: 80px;margin-top: 15px;" src="./Screenshot 2024-03-04 at 04-07-14 GFG Get Hired gainwell technologies.png"/><br><br>Application Developer
+                            <br>
+                            <br>
+                            <p style="color: green;">gainwell technologies</p>
+                            <p><img style="height: 5px;width: 5px;" src="./images (1).png"/>&nbsp&nbsp As per Industry standard</p>
+                            <p><img style="height: 5px;width: 5px;" src="./535239.png"/>&nbsp&nbsp Onsite</p>
+                            <p><img style="height: 5px;width: 5px;" src="./images.jpeg"/>&nbsp&nbsp 5+years</p>
+                            <br>
+                            <br>
+                            <p style="font-size: xx-small;">Apply before Thu Apr 04 2024<span style="color: green;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<button class="job-grid-button">Apply Now</button></span></p>
+                        </div>
+                         </div>              
+                   </job>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <problem>
+                                <div style="border: 1px solid white;height: 200px;width: 900px;margin-left: 200px;border-top-left-radius:5px ;border-top-right-radius:5px ;border-bottom-left-radius:5px ;border-bottom-right-radius:5px ;">
+                                    <div style="background-color: green;height: 198px;width: 150px;border-top-left-radius: 15px;border-bottom-left-radius: 15px;">
+                                        <div>
+                                        <img style="height: 100px;width: 150px;position: relative;left: 70px;top: 50px;" src="./Asset1-1641910145.svg"/>
+                                        </div>
+                                        <div>
+                                            <p style="position: relative;left: 200px;bottom: 70px;color: green;">Problem of the day</p>
+                                            <p><h4 style="position: relative;left: 200px;bottom: 70px;">Peak element<p style="font-size: small;width: 300px;"><br>Solve one problem based on Data Structures and<br>Algorithms every day and win exciting prizes</p></h4>
+                                        </div style="position: relative;left: 750px;bottom: 120px;color: white;" id="countdown">
+                                           
+                                    </div>
+                                </div>
+                </problem>
+                <videos>
+                    <h3><b style="margin-left: 300px;">Videos</b></h3>
+                    <div class="video-grid">
+                        <div class="video-items-one">
+                            <img style="width: 220px;height: 180px;" src="./02March20240302181847-small.png"/>
+                            <p><b style="position: relative;left: 5px;top: 25px;">PROBLEM OF THE DAY:</b></p>
+                            <p><b style="position: relative;left: 5px;top: 15px;">02/02/2024 | First...</b></p>
+                            <p style="font-size: smaller;position: relative;top: 40px;left: 5px;">03/03/2024</p>
+                        </div>
+                        <div class="video-items-two">
+                            <img style="width: 220px;height: 180px;" src="./01March20240301101823-small.png"/>
+                            <p><b style="position: relative;left: 5px;top: 25px;">PROBLEM OF THE DAY:</b></p>
+                            <p><b style="position: relative;left: 5px;top: 15px;">01/03/2024 | Peak e...</b></p>
+                            <p style="font-size: smaller;position: relative;top: 40px;left: 5px;">02/03/2024</p>  
+                        </div>
+                        <div class="video-items-third">
+                            <img style="width: 220px;height: 180px;" src="./POTD29Feb20240229150548-small.png"/>
+                            <p><b style="position: relative;left: 5px;top: 25px;">PROBLEM OF THE DAY:</b></p>
+                            <p><b style="position: relative;left: 5px;top: 15px;">29/02/2024 | Sum of...</b></p>
+                            <p style="font-size: smaller;position: relative;top: 40px;left: 5px;">01/03/2024</p>
+                        </div>
+                        <div class="video-items-four">
+                            <img style="width: 220px;height: 180px;" src="./POTD28Feb20240228101139-small.png"/>
+                            <p><b style="position: relative;left: 5px;top: 5px;">PROBLEM OF THE DAY:</b></p>
+                            <p><b style="position: relative;left: 5px;top: 15px;">28/02/2024 | Check...</b></p>
+                            <p style="font-size: smaller;position:relative;top: 40px;left: 5px;">29/02/2024</p>
+                        </div>
+                        <div class="video-items-five">
+                            <img style="width: 220px;height: 180px;" src="./POTD27Feb20240227225020-small.png"/>
+                            <p><b style="position: relative;left: 5px;top: 5px;">PROBLEM OF THE DAY:</b></p>
+                            <p><b style="position: relative;left: 5px;top: 15px;">27/02/2024 | Play W...</b></p>
+                            <p  style="font-size: smaller;position: relative;top: 40px;left: 5px;">28/02/2024</p>
+                        </div>
+                        <div class="video-items-six">
+                            <img style="width: 220px;height: 180px;" src="./POTD26Feb20240226222955-small.png"/>
+                            <p><b style="position: relative;left: 5px;top: 5px;">PROBLEM OF THE DAY:</b></p>
+                            <p><b style="position: relative;left: 5px;top: 15px;">26/02/2024 | Power...</b></p>
+                            <p style="font-size: smaller;position: relative;top: 40px;left: 5px;">27/02/2024</p>
+                        </div>
+                    </div>
+                </videos>
+                <br>
+                <br>
+                <br>
+                <articles>
+                    <h3><b style="margin-left: 300px;">Articles</b></h3>
+                          <div class="article-box">
+                            <div class="article-items-one" style="border: 1px solid black;border-top-left-radius:5px ;border-top-right-radius:5px ;border-bottom-left-radius:5px ;border-bottom-right-radius: 5px;background-color: black;color: white;">All</div>
+                            <div class="article-items-two" style="margin-left: 15px;border: 1px solid black;border-top-left-radius:5px ;border-top-right-radius:5px ;border-bottom-left-radius:5px ;border-bottom-right-radius: 5px;">News</div>
+                            <div class="article-items-third" style="margin-left: 15px;border: 1px solid black;border-top-left-radius:5px ;border-top-right-radius:5px ;border-bottom-left-radius:5px ;border-bottom-right-radius: 5px;">GBlog</div>
+                            <div class="article-items-four" style="margin-left: 15px;border: 1px solid black;border-top-left-radius:5px ;border-top-right-radius:5px ;border-bottom-left-radius:5px ;border-bottom-right-radius: 5px;">Web Technologies</div>
+                            <div class="article-items-five" style="margin-left: 15px;border: 1px solid black;border-top-left-radius:5px ;border-top-right-radius:5px ;border-bottom-left-radius:5px ;border-bottom-right-radius: 5px;">Picked</div>
+                            <div class="article-items-six" style="margin-left: 15px;border: 1px solid black;border-top-left-radius:5px ;border-top-right-radius:5px ;border-bottom-left-radius:5px ;border-bottom-right-radius: 5px;">HTML</div>
+                            <div class="article-items-seven" style="margin-left: 15px;border: 1px solid black;border-top-left-radius:5px ;border-top-right-radius:5px ;border-bottom-left-radius:5px ;border-bottom-right-radius: 5px;">GFG Course</div>
+                            <div class="article-items-eight" style="margin-left: 15px;border: 1px solid black;border-top-left-radius:5px ;border-top-right-radius:5px ;border-bottom-left-radius:5px ;border-bottom-right-radius: 5px;">Hiring Challenges</div>
+                            <div class="article-items-nine" style="margin-left: 15px;border: 1px solid black;border-top-left-radius:5px ;border-top-right-radius:5px ;border-bottom-left-radius:5px ;border-bottom-right-radius: 5px;">Python</div>
+                            <div class="article-items-ten" style="margin-left: 15px;border: 1px solid black;border-top-left-radius:5px ;border-top-right-radius:5px ;border-bottom-left-radius:5px ;border-bottom-right-radius: 5px;">School Programming</div>
                           </div>
+                          <br>
+                          <br>
+                          <br>
+                          <div class="five-box">
+                            <b>Ruby on Rails vs Flask</b>
+                            <p> One cannot stress how crucial web development frameworks are to creating robust, scalable, and efficient web applications. Two of the most well-liked frameworks available ...Read more</p>
+                            <p style="display: flex;color: green;">
+                              GBlog
+                              Web Technologies
+                              Python Flask
+                              GBlog 2024
+                              Dev Scripter
+                              Dev Scripter 2024
+                          </p>
+                          </div>
+                            <div class="five-box">
+                            <b>Top 10 Automation Companies in 2024</b>
+                            <p>According to reports, the industrial automation market will reach USD 197.8 billion by 2026. Thus, you can expect its demand from the leading automation companies. Because...Read more</p>
+                            <p style="display: flex;color: green;">
+                              GBlog
+                              GBlog 2024
+                           </p>
+                          </div>
+                            <div class="five-box">
+                             <b>Unlocking Growth with HubSpot</b>
+                             <p>If you came across this post, you are definitely reading about customer relationship management (CRM) tools. Nowadays, businesses are continuously looking for cutting-edge...Read more</p>
+                             <p style="display: flex;color: green;">
+                              Articles
+                              Spotlight
+                          </p>  
+                          </div>
+                            <div class="five-box">
+                             <b>Effective Strategy to Avoid Duplicate Messages in Apache Kafka Consumer</b>
+                             <p>Apache Kafka is a good choice for distributed messaging systems because of its robust nature. In this article, we will explore advanced strategies to avoid duplicate messa...Read more</p>
+                             <p style="color: green;display: flex;">
+                               Picked
+                               Apache Kafka Java
+                               Apache Kafka
+                               Advance Java
+                               Dev Scripter
+                               Dev Scripter 2024
+                             </p>  
+                          </div>
+                            <div class="five-box">
+                             <b>How to Configure AuditListener in Spring Boot Application</b>
+                             <p>Spring Boot Data provides support to transparently keep track of who created an entity or changed an entity and when these things happened. All records are maintained clea...Read more</p>
+                             <p style="color: green;display: flex;">
+                              Java-Spring-Boot
+                              Advance Java
+                             </p>
+                            </div>
+                        </div>
+                            <div>
+                            <button style="margin-left: 550px;" onclick="myFunction()">viewMore</button>
+                             <div id="viewmore" class="veiw">
+                             <div>
+                             <b>Ultimate Guide: Remove Screen Lock on iPhone with/without Passcode [2024]</b>
+                             <p>Do you want to remove the screen lock from your iPhone? You have come to the right place. In this article, we will introduce you to solutions in various scenarios, whether...Read more</p>
+                             <p style="color: green;display: flex;">
+                                TechTips
+                                Spotlight
+                             </p>  
+                             </div>
+                            
+                             <div class="view-more">
+                              <b>Design a Online Cake Shop Website in HTML CSS & JavaScript</b>  
+                              <p>Every business is going online nowadays for better growth and productivity. We are going to build an online cake shop website that will represent the shop in a good manner...Read more</p>
+                              <p style="color: green;display: flex;">
+                                Project
+                                Web Technologies
+                                JavaScript
+                                Picked
+                                JavaScript-Projects
+                                Dev Scripter
+                                Dev Scripter 2024
+                              </p>
+                             </div>
 
-                        
-                        <a class="prev" onclick="plusSlides(-1)">❮</a>
-                        <a class="next" onclick="plusSlides(1)">❯</a>
-                        
-                        </div>
-                        <br>
-                        
-                        <div style="text-align:center">
-                          <span class="dot" onclick="currentSlide(1)"></span> 
-                          <span class="dot" onclick="currentSlide(2)"></span> 
-                          <span class="dot" onclick="currentSlide(3)"></span> 
-                          <span class="dot" onclick="currentSlide(3)"></span>
-                        </div>
-                 
-                </slideshow>
-                 
+                             <div class="view-more">
+                                <b>Design a Complex Number Calculator in Tailwind CSS</b>
+                                <p>This project is a Complex Number Calculator designed. It allows users to perform basic addition arithmetic operations on complex numbers. Prerequisites HTMLCSSTailwind CSS...Read more</p>
+                                <p style="color: green;display: flex;">
+                                    Web Technologies
+                                    JavaScript
+                                    CSS
+                                    Tailwind CSS
+                                </p>
+                             </div>
+
+                             <div class="view-more">
+                                <b>Design a Area and Volume Calculator in Tailwind CSS</b>
+                                <p>This project is an Area and Volume Calculator designed using the Tailwind CSS. It allows users to select different shapes and input the required dimensions to calculate th...Read more</p>
+                                <p style="color: green;display: flex;">
+                                    Web Technologies
+                                    JavaScript
+                                    CSS
+                                    Tailwind CSS
+                                </p>
+                             </div>
+
+                             <div class="view-more">
+                                <b>Top 10 Places to Visit in UAE</b>
+                                <p>Burj Khalifa is the best place to visit in UAE and is considered one of the world's best places too. The United Arab Emirates is one such country that in just a short peri...Read more</p>
+                                <p style="color: green;display: flex;">
+                                    Picked
+                                      UPSC
+                                </p>
+                             </div>
+
+                             <div class="view-more">
+                                <b>PyTorch for Unsupervised Clustering</b>
+                                <p>The aim of unsupervised clustering, a fundamental machine learning problem, is to divide data into groups or clusters based on resemblance or some underlying structure. On...Read more</p>
+                                <p style="color: green;display: flex;">
+                                    Picked
+                                    Python-PyTorch
+                                    Deep Learning
+                                    Dev Scripter
+                                    Dev Scripter 2024
+                                </p>
+                             </div>
+                                
+                             <div class="view-more">
+                                <b>Top 10 Largest Arms Importers in the World</b>  
+                                <p>In the last five years, India accounted for the largest share of global arms imports (11%), followed by Saudi Arabia (9.6%), Qatar (6.4%), Australia (4.7%), and China (4.7...Read more</p>
+                                <p style="color: green;display: flex;">
+                                    Picked
+                                    UPSC
+                                </p>
+                            </div>
+                            <button style="position: relative;top: 70px;left: 300px;" onclick="myviewless()" id="viewmore">ViewLess</button>
+                     </div>
+                    </div>
+                       </articles>
+                      <!-- <hr>
+                       <footer>
+                        <div style="display: flex;">
+                            <div>
+                                <img src="./gfg-gg-logo.svg"/>
+                                <img src="./gfgFooterLogo1.png"/>
+                                <p><img style="height: 50px;width: 70px;" src="./535239.png"/><span>A-143,9th Floor,Sovereign Corporate Tower,Sector-136,Noida,Uttar Pradesh-201305</span></p>
+                                <p><img style="display: inline;" src="./Facebook_f_logo_(2019).svg.png"/><span><img src="./intstagram.jpeg"/></span><span><img src="./lnkedln.png"/></span><span><img src="./X.png"/></span><span><img src="./Untitled.jpeg"/></span></p>
+                            </div>
+                        </div> 
+
+                       </footer> -->
+
+
+
+
+               
+             
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!-- <dsa>
+                               <h3 style="margin-left: 300px;"><b>DSA</b></h3>
+                               <div class="dsa-grid">
+                                <button class=" dsa-icon left-arrow" onclick="scrolll()"><i class="fa fa-angle-double-left"></i></button>
+                                <div class="dsa-items" id="dsa-items-one">Array</div>
+                                <div class="dsa-items" id="dsa-items-two">Analysis of Algo</div>
+                                <div class="dsa-items" id="dsa-items-third">Linked list</div>
+                                <div class="dsa-items" id="dsa-items-four">Searching Algo</div>
+                                <div class="dsa-items" id="dsa-items-five">Stack</div>
+                                <div class="dsa-items" id="dsa-items-six">Sorting Algo</div>
+                                <div class="dsa-items" id="dsa-items-seven">Queue</div>
+                                <div class="dsa-items" id="dsa-items-eight">Graph Algo</div>
+                                <button class="dsa-icon right-arrow" onclick="scrollr()"><i class="fa fa-angle-double-right"></i></button>   
+                            </div>
+
+                </dsa>     -->
         
         
-        
-        
-        
-        
-        
-        
-        
-        </content>
+    
 </body>
 </html>
 
