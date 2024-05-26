@@ -1,0 +1,217 @@
+.scroll-data {
+    position: relative;
+    overflow-x: hidden;
+    display: flex;
+    white-space: nowrap;
+    height: 80px;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    margin-bottom: 0px;
+    margin: 0px;
+}
+
+.icon {
+    color: rgb(red, green, blue);
+    font-size: 50px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 40px;
+    z-index: 1000;
+}
+
+.subheader-one {
+    border: 3px solid yellow;
+    background-color: yellow;
+    height: 40px;
+}
+
+.icon.right-arrow {
+    position: sticky;
+    right: 0;
+    top: 50%;
+}
+
+.icon.left-arrow {
+    position: sticky;
+    left: 0;
+    bottom: 50%;
+}  
+
+.courses { 
+    float:left;
+    margin-top: 11px;
+    z-index:0;
+    overflow:hidden;
+    position:relative; 
+    margin-left:30px;
+
+}  
+
+.courses:hover {
+    overflow:visible;
+    z-index:100;
+}
+
+.courses:hover .courses-hide { 
+    position: fixed;
+    z-index:99
+    /* position: static; */
+}
+
+.courses-hide { 
+    position: absolute;
+    margin: 30px;
+}
+
+.tutorials { 
+    float:left;
+    margin-top: 11px;
+    z-index:0;
+    overflow:hidden;
+    position:relative; 
+}  
+
+.tutorials:hover {
+    overflow:visible;
+    z-index:100;
+}
+
+.tutorials:hover .tutorials-hide { 
+    position: fixed;
+    z-index:99
+    /* position: static; */
+}
+
+.tutorials-hide { 
+    position: absolute;
+}
+
+.jobs { 
+    float:left;
+    margin-top: 11px;
+    z-index:0;
+    overflow:hidden;
+    position:relative; 
+}  
+
+.jobs:hover {
+    overflow:visible;
+    z-index:100;
+}
+
+.jobs:hover .jobs-hide { 
+    position: fixed;
+    z-index:99
+    /* position: static; */
+}
+
+.jobs-hide { 
+    position: absolute;
+}
+
+.practice { 
+    float:left;
+    margin-top: 11px;
+    z-index:0;
+    overflow:hidden;
+    position:relative; 
+}  
+
+.practice:hover {
+    overflow:visible;
+    z-index:100;
+}
+
+.practice:hover .practice-hide { 
+    position: fixed;
+    z-index:99
+    /* position: static; */
+}
+
+.practice-hide { 
+    position: absolute;
+}
+
+.contest { 
+    float:left;
+    margin-top: 11px;
+    z-index:0;
+    overflow:hidden;
+    position:relative; 
+}  
+
+.contest:hover {
+    overflow:visible;
+    z-index:100;
+}
+
+.contest:hover .contest-hide { 
+    position: fixed;
+    z-index:99
+    /* position: static; */
+}
+
+.contest-hide { 
+    position: absolute;
+}
+
+.box{
+    /* position: relative;
+    overflow: hidden; */
+    transition: 0.5s;
+}
+.box:hover{
+   z-index: 1;
+   transform: scale(1);
+   box-shadow: 0 25px 40px rgba(0,0,0,0.5);
+}
+
+.slides-container {
+        position: relative;
+        overflow: hidden;
+        width: 819px;
+    }
+    .slides {
+        display: flex;
+        transition: transform 0.5s ease;
+    }
+    .slide {
+        flex: 0 0 auto;
+        width: 820px; /* adjust as needed */
+        border: 1px solid white;
+        position: relative;
+        right: 1px;
+        height: 300px;
+        border-top-right-radius:5px;
+        border-bottom-right-radius: 5px;
+    }
+    .dot-container {
+        text-align: center;
+        margin-top: 15px;
+    }        
+    .dot {
+        display: inline-block;
+        height: 15px;
+        width: 15px;
+        background-color: #bbb;
+        border-radius: 50%;
+        margin: 0 5px;
+        cursor: pointer;
+    }
+    .dot.active {
+        background-color: #717171;
+    }
+
+    .grid-box{
+        display: grid;
+        grid-template-columns: repeat(3,220px);
+        grid-template-rows:repeat(2,300px);
+        margin-left: 300px;
+        grid-gap: 40px 5px ;
+       
+    }
+
+.grid-button:hover{
+background-color: green;
+}
